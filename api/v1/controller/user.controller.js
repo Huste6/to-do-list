@@ -156,3 +156,17 @@ module.exports.resetPassword = async (req,res) => {
     })
 
 }
+//[POST] /api/v1/user/detail
+module.exports.detail = async (req,res) => {
+    const token = req.cookies.token;
+    const user = await User.findOne({
+        token: token,
+        deleted:false
+    }).select("fullname email")
+
+    res.json({
+        code:200,
+        message: "Thanh cong!",
+        info: user
+    })
+}
