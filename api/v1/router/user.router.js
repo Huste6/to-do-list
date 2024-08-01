@@ -7,4 +7,6 @@ router.post('/register',validate.register,controller.register);
 
 router.post('/login',validate.login,controller.login);
 
+router.post('/password/forgot',controller.forgotPassword);
+
 module.exports = router;
