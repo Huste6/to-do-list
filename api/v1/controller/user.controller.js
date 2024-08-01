@@ -157,11 +157,20 @@ module.exports.resetPassword = async (req,res) => {
     })
 
 }
-//[POST] /api/v1/user/detail
+//[GET] /api/v1/user/detail
 module.exports.detail = async (req,res) => {
     res.json({
         code:200,
         message: "Thanh cong!",
         info: req.user
+    })
+}
+//[GET] /api/v1/user/list
+module.exports.list = async (req,res)=>{
+    const users = await User.find({deleted:false}).select("fullname email")
+    res.json({
+        code:200,
+        message: "Success!",
+        users: users
     })
 }
