@@ -130,3 +130,29 @@ module.exports.otpForgotPassword = async (req,res) => {
         token: token
     })
 }
+//[POST] /api/v1/user/password/reset
+module.exports.resetPassword = async (req,res) => {
+    const token = req.body.token; // req.cookies.token
+    const password = md5(req.body.password);
+    const user = await User.findOne({
+        token:token
+    })
+    if(password === user.password){
+        res.json({
+            code:400,
+            message: "Vui lòng nhập mật khẩu mới khác mật khẩu cũ!"
+        })
+        return;
+    }
+    await User.updateOne({
+        token:token
+    },{
+        password: password
+    });
+
+    res.json({
+        code:200,
+        message: "Đổi mật khẩu thành công!"
+    })
+
+}
